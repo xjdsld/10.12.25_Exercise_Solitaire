@@ -1,3 +1,5 @@
+import random
+
 class Card:
   def __init__(self, rank, suit, face_up = False):
       self.rank = rank
@@ -20,7 +22,7 @@ class Deck:
   def create_deck(self, meaning, suit):
       for i in suit:
         for j in meaning:
-         self.deck.append(Card(i,j))
+         self.deck.append(Card(j,i))
       return self.deck
 
   def shuffle_deck(self):
@@ -33,8 +35,10 @@ class Pile:
   def push(self, card):
       self.pile.append(card)
 
-  def pop_cards(self):
-     return self.pile.pop()
+def pop_cards(self):
+    if len(self.pile) > 0:     
+        return self.pile.pop()
+    return None                
 
 
 class Table:
@@ -51,6 +55,7 @@ class Table:
           return top_card
       else:
           print(f"The {table} if empty. No cards to show")
+          
     
 class Game:
   def __init__(self):
@@ -70,4 +75,16 @@ class Game:
           for j in range(i+1):
               card = self.deck.deck.pop()   
               self.piles[i].pile.append(card)
-    
+
+    def win(self):
+        for pile in self.piles:
+            if len(pile.pile) != 0:
+                return False
+        print("You win!")
+        return True
+
+game = Game()
+
+for pile in game.piles:  
+    while len(pile.pile) > 0:
+        pile.pile.pop()
